@@ -8,11 +8,11 @@ import scala.math.Pi
 
 object Main {
 
-  def almostFourier(signal : Double=>Double, sampleFrequency: Double)(t : Double) =
+  def wound(signal : Double=>Double, sampleFrequency: Double)(t : Double) =
     signal(t) * exp(2 * Pi * i * sampleFrequency * t)
 
   def center(signal : Double=>Double, timepoints: DenseVector[Double])(sampleFrequency: Double) :Complex =
-    mean(timepoints.map{t => almostFourier(signal, sampleFrequency)(t)})
+    mean(timepoints.map{t => wound(signal, sampleFrequency)(t)})
 
   def main(args: Array[String]): Unit = {
     val f = Figure()
@@ -26,7 +26,7 @@ object Main {
 
     def signal(t :  Double) :Double = { cos(2 * Pi * 3 * t) + cos(2 * Pi * 2 * t) + 2.0}
 
-    val zs = timepoints.map{t => almostFourier(signal, sampleFrequency)(t)};
+    val zs = timepoints.map{t => wound(signal, sampleFrequency)(t)};
 
     val centerx = DenseVector(mean(zs))
 
